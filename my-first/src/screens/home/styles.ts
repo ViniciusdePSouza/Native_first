@@ -19,11 +19,13 @@ export const styles = StyleSheet.create({
   },
 
   input: {
+    flex: 1,
     backgroundColor: "#1F1E25",
     borderRadius: 5,
     color: "#FFFF",
     padding: 16,
     fontSize: 16,
+    marginRight: 12
   },
 
   buttonText:{
@@ -38,5 +40,20 @@ export const styles = StyleSheet.create({
     backgroundColor: "#31CF67",
     justifyContent: "center",
     alignItems: "center",
-  }
+  },
+
+  form: {
+    width: '100%',
+    flexDirection: "row",
+    marginTop: 36,
+    marginBottom: 42
+  },
+
+  studentTable:{
+    gap: 8
+  },
+  
+  listEmpty: {
+    color: "#FFFF",
+  },
 });
