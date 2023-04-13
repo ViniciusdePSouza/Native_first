@@ -3,7 +3,6 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  ScrollView,
   FlatList,
   Alert,
 } from "react-native";
@@ -12,34 +11,37 @@ import { Student } from "../../components/Student";
 import React, { useState } from "react";
 
 export function Home() {
-  const [students, setStudents] = useState<string[]>([''])
-  const [inputStudentName, setInputStudentName] = useState('')
+  const [students, setStudents] = useState<string[]>([""]);
+  const [inputStudentName, setInputStudentName] = useState("");
 
   function handleAddStudent(newStudent: string) {
-
-    if(students.includes(newStudent)) {
-      return Alert.alert('Participante já existe')
+    if (students.includes(newStudent)) {
+      return Alert.alert("Participante já existe");
     }
 
-    setStudents(prevState => [...prevState, newStudent])
-    setInputStudentName('')
+    setStudents((prevState) => [...prevState, newStudent]);
+    setInputStudentName("");
   }
 
   function handleExcludeStudent(name: string) {
-    Alert.alert('Ecluir', `Deseja escluir o ${name}?`, [
+
+    Alert.alert("Ecluir", `Deseja escluir o ${name}?`, [
       {
-        text: 'Sim',
-        onPress: () => {Alert.alert('Deletado!')} 
+        text: "Sim",
+        onPress: () => {
+          Alert.alert("Deletado!");
+          const deletedStudentArray = students.filter(
+            (studentName) => studentName !== name
+          );
+
+          return setStudents(deletedStudentArray);
+        },
       },
       {
-        text: 'Não',
-        style: 'cancel'
-      }
-    ])
-
-    students.filter( studentName => studentName !== name)
-
-    return students
+        text: "Não",
+        style: "cancel",
+      },
+    ]);
   }
 
   return (
@@ -54,16 +56,20 @@ export function Home() {
             style={styles.input}
             placeholder="Nome do aluno"
             placeholderTextColor="#6B6B6B"
-            onChangeText={ name => setInputStudentName(name)}
+            onChangeText={(name) => setInputStudentName(name)}
             value={inputStudentName}
           />
 
-          <TouchableOpacity style={styles.button} onPress={() => handleAddStudent(inputStudentName)}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => handleAddStudent(inputStudentName)}
+          >
             <Text style={styles.buttonText}>+</Text>
           </TouchableOpacity>
         </View>
 
-        <FlatList style={styles.studentTable}
+        <FlatList
+          style={styles.studentTable}
           data={students}
           keyExtractor={(student) => student}
           renderItem={({ item }) => (
@@ -74,10 +80,12 @@ export function Home() {
             />
           )}
           ListEmptyComponent={() => (
-            <Text style={styles.listEmpty}> Ninguém ainda ? Adiciona um estudando ao workshop! </Text>
-          )
-          }
-        /> 
+            <Text style={styles.listEmpty}>
+              {" "}
+              Ninguém ainda ? Adiciona um estudando ao workshop!{" "}
+            </Text>
+          )}
+        />
       </View>
     </>
   );
