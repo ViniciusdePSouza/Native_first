@@ -3,11 +3,10 @@ import { styles } from "./styles";
 
 type StudentProps = {
   name: string;
-  id: string;
   onRemove: () => void;
 }
 
-export function Student({ name, id, onRemove }: StudentProps) {
+export function Student({ name, onRemove }: StudentProps) {
 
   return (
     <View style={styles.container}>

@@ -9,24 +9,20 @@ import {
 } from "react-native";
 import { styles } from "./styles";
 import { Student } from "../../components/Student";
-
-interface Students {
-  name: string;
-  id: string;
-}
+import React, { useState } from "react";
 
 export function Home() {
-  const students = [
-    {name: "John", id: "1"},
-    {name: "John", id: "12"},
-    {name: "Vini", id: "13"},
-    {name: "John", id: "14"}
-  ];
+  const [students, setStudents] = useState<string[]>([''])
+  const [inputStudentName, setInputStudentName] = useState('')
 
-  function handleAddStudent() {
-    if(students.includes({ name: 'Vini', id: '13' })) {
-      return Alert.alert('Existe', 'Ja existe uma pessoa dessa aí ' )
+  function handleAddStudent(newStudent: string) {
+
+    if(students.includes(newStudent)) {
+      return Alert.alert('Participante já existe')
     }
+
+    setStudents(prevState => [...prevState, newStudent])
+    setInputStudentName('')
   }
 
   function handleExcludeStudent(name: string) {
@@ -41,6 +37,9 @@ export function Home() {
       }
     ])
 
+    students.filter( studentName => studentName !== name)
+
+    return students
   }
 
   return (
@@ -55,22 +54,23 @@ export function Home() {
             style={styles.input}
             placeholder="Nome do aluno"
             placeholderTextColor="#6B6B6B"
+            onChangeText={ name => setInputStudentName(name)}
+            value={inputStudentName}
           />
 
-          <TouchableOpacity style={styles.button} onPress={handleAddStudent}>
+          <TouchableOpacity style={styles.button} onPress={() => handleAddStudent(inputStudentName)}>
             <Text style={styles.buttonText}>+</Text>
           </TouchableOpacity>
         </View>
 
-        <FlatList<Students> style={styles.studentTable}
+        <FlatList style={styles.studentTable}
           data={students}
-          keyExtractor={(student) => student.id}
-          renderItem={({name, id}) => (
+          keyExtractor={(student) => student}
+          renderItem={({ item }) => (
             <Student
-              name={name}
-              key={id}
-              onRemove={() => handleExcludeStudent(name)}
-              id={id}
+              name={item}
+              key={item}
+              onRemove={() => handleExcludeStudent(item)}
             />
           )}
           ListEmptyComponent={() => (
