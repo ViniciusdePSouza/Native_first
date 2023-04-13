@@ -11,7 +11,7 @@ import { Student } from "../../components/Student";
 import React, { useState } from "react";
 
 export function Home() {
-  const [students, setStudents] = useState<string[]>([""]);
+  const [students, setStudents] = useState<string[]>([]);
   const [inputStudentName, setInputStudentName] = useState("");
 
   function handleAddStudent(newStudent: string) {
@@ -25,7 +25,7 @@ export function Home() {
 
   function handleExcludeStudent(name: string) {
 
-    Alert.alert("Ecluir", `Deseja escluir o ${name}?`, [
+    Alert.alert("Excluir", `Deseja escluir o ${name}?`, [
       {
         text: "Sim",
         onPress: () => {
